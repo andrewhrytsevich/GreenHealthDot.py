@@ -15,15 +15,6 @@ def menu1 ():
     markup.add(goroh, podsolhuh, redis)
     return markup
 
-@bot.message_handler(commands=['start', 'help'])
-def vibor(message):
-    photo = open('foto_zastavka.jpg', 'rb')
-    bot.send_photo(message.chat.id, photo)
-    bot.send_message(message.chat.id, "Я бот который поможет вам купить здоровую и полезную микрозелень. "
-                                      "Цены: горох - 100руб./100гр., подсолнух - 150руб./100гр., редис - 200руб./100гр.")
-    bot.send_message(message.chat.id, 'Выбирете продукт:', reply_markup=menu1())
-
-
 def menu2():
     # менюшка кнопок с выбором порции
     markup2 = types.InlineKeyboardMarkup(row_width=3)
@@ -33,17 +24,20 @@ def menu2():
     markup2.add(gr_100, gr_500, gr_1000)
     return markup2
 
-
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(commands=['start', 'help'])
 def vibor(message):
-    bot.send_message(message.chat.id, 'Выбирете продукт:', reply_markup=menu2())
+    photo = open('foto_zastavka.jpg', 'rb')
+    bot.send_photo(message.chat.id, photo)
+    bot.send_message(message.chat.id, "Я бот который поможет вам купить здоровую и полезную микрозелень. "
+                                      "Цены: горох - 100руб./100гр., подсолнух - 150руб./100гр., редис - 200руб./100гр.")
+    bot.send_message(message.chat.id, 'Выбирете продукт:', reply_markup=menu1())
 
 
 @bot.callback_query_handler(func=lambda call: True)
 def vibor (call):
     # выбор продукта
     if call.message:
-        # if call.data != 'goroh1' or 'podsolhuh1' or 'redis1':
+        # if call.data != 'goroh1' or 'podsolhuh1' or 'redis1' or 'gr_100' or 'gr_500' or 'gr_1000':
         #     bot.send_message(call.message.chat.id, 'Сделайте свой выбор')
         if call.data == 'goroh1':
             photo1 = open('goroh.jpg', 'rb')
@@ -52,35 +46,39 @@ def vibor (call):
         elif call.data == 'podsolhuh1':
             photo2 = open('podsolnuh.jpg', 'rb')
             bot.send_photo(call.message.chat.id, photo2)
-            bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=markup2)
+            bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
         elif call.data == 'redis1':
             photo3 = open('redis.jpg', 'rb')
             bot.send_photo(call.message.chat.id, photo3)
-            bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=markup2)
+            bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
         # выбор веса
         elif call.data == 'gr_100':
             bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-            bot.register_next_step_handler(call.message, last_answ)
+            # bot.register_next_step_handler(call.message, last_answ)
             bot.register_next_step_handler(call.message, reg_data)
         elif call.data == 'gr_500':
             bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-            bot.register_next_step_handler(call.message, last_answ)
+            # bot.register_next_step_handler(call.message, last_answ)
             bot.register_next_step_handler(call.message, reg_data)
         elif call.data == 'gr_1000':
             bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-            bot.register_next_step_handler(call.message, last_answ)
+            # bot.register_next_step_handler(call.message, last_answ)
             bot.register_next_step_handler(call.message, reg_data)
-        else:
-            bot.send_message(call.message.chat.id, 'Сделайте свой выбор')
+        # else:
+        #     bot.send_message(call.message.chat.id, 'Сделайте свой выбор')
         # print (call.data)
         global product
         product = call.data
+    print(call.message)
 
-@bot.message_handler(content_types=['text'])
-def last_answ(message):
-    bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
 
-print(product)
+# if bot.callback_query_handler(func=lambda call: True) is not None:
+#     bot.send_message(call.message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
+
+# @bot.message_handler(content_types=['text'])
+# def last_answ(message):
+#     bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
+
 # ввод данных в БД
 def reg_data(message):
     user_data = message.text
