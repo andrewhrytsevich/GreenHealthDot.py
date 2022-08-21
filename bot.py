@@ -7,13 +7,15 @@ bot = telebot.TeleBot(token)
 
 product = ""
 
-def menu1 ():
+
+def menu1():
     markup = types.InlineKeyboardMarkup(row_width=3)
     goroh = types.InlineKeyboardButton('Горох', callback_data='goroh1')
     podsolhuh = types.InlineKeyboardButton('Подсолнух', callback_data='podsolhuh1')
     redis = types.InlineKeyboardButton('Редис', callback_data='redis1')
     markup.add(goroh, podsolhuh, redis)
     return markup
+
 
 def menu2():
     # менюшка кнопок с выбором порции
@@ -23,6 +25,7 @@ def menu2():
     gr_1000 = types.InlineKeyboardButton('1000 гр.', callback_data='gr_1000')
     markup2.add(gr_100, gr_500, gr_1000)
     return markup2
+
 
 @bot.message_handler(commands=['start', 'help'])
 def vibor(message):
@@ -34,7 +37,7 @@ def vibor(message):
 
 
 @bot.callback_query_handler(func=lambda call: True)
-def vibor (call):
+def vibor(call):
     # выбор продукта
     if call.message:
         # if call.data != 'goroh1' or 'podsolhuh1' or 'redis1' or 'gr_100' or 'gr_500' or 'gr_1000':
@@ -75,9 +78,10 @@ def vibor (call):
 # if bot.callback_query_handler(func=lambda call: True) is not None:
 #     bot.send_message(call.message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
 
-# @bot.message_handler(content_types=['text'])
-# def last_answ(message):
-#     bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
+@bot.message_handler(content_types=['text'])
+def last_answ(message):
+    bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
+
 
 # ввод данных в БД
 def reg_data(message):
