@@ -6,7 +6,7 @@ token = '5547925519:AAFcNbmPiXaDu_XfBKY3NyYv1vfiGkyMu3M'
 bot = telebot.TeleBot(token)
 
 product = ""
-
+ves = ""
 
 def menu1():
     markup = types.InlineKeyboardMarkup(row_width=3)
@@ -39,6 +39,7 @@ def vibor(message):
 @bot.callback_query_handler(func=lambda call: True)
 def vibor(call):
     # выбор продукта
+
     if call.message:
         # if call.data != 'goroh1' or 'podsolhuh1' or 'redis1' or 'gr_100' or 'gr_500' or 'gr_1000':
         #     bot.send_message(call.message.chat.id, 'Сделайте свой выбор')
@@ -46,52 +47,56 @@ def vibor(call):
             photo1 = open('goroh.jpg', 'rb')
             bot.send_photo(call.message.chat.id, photo1)
             bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
+            global product
+            product = call.data
+            bot.register_next_step_handler(call.message.chat.id, reg_data)
         elif call.data == 'podsolhuh1':
             photo2 = open('podsolnuh.jpg', 'rb')
             bot.send_photo(call.message.chat.id, photo2)
             bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
+            global product
+            product = call.data
+            bot.register_next_step_handler(call.message.chat.id, reg_data)
         elif call.data == 'redis1':
             photo3 = open('redis.jpg', 'rb')
             bot.send_photo(call.message.chat.id, photo3)
             bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
-        # выбор веса
+            global product
+            product = call.data
+            bot.register_next_step_handler(call.message.chat.id, reg_data)
+    # global product
+    # product = call.data
         elif call.data == 'gr_100':
             bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-            # bot.register_next_step_handler(call.message, last_answ)
+            bot.register_next_step_handler(call.message, last_answ)
             bot.register_next_step_handler(call.message, reg_data)
         elif call.data == 'gr_500':
             bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-            # bot.register_next_step_handler(call.message, last_answ)
+            bot.register_next_step_handler(call.message, last_answ)
             bot.register_next_step_handler(call.message, reg_data)
         elif call.data == 'gr_1000':
             bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-            # bot.register_next_step_handler(call.message, last_answ)
+            bot.register_next_step_handler(call.message, last_answ)
             bot.register_next_step_handler(call.message, reg_data)
-        # else:
-        #     bot.send_message(call.message.chat.id, 'Сделайте свой выбор')
-        # print (call.data)
-        global product
-        product = call.data
-    print(call.message)
 
+        global ves
+        ves = call.data
+        print(ves)
 
-# if bot.callback_query_handler(func=lambda call: True) is not None:
-#     bot.send_message(call.message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
-
-@bot.message_handler(content_types=['text'])
+# @bot.message_handler(content_types=['text'])
 def last_answ(message):
     bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
-
 
 # ввод данных в БД
 def reg_data(message):
     user_data = message.text
     user_id = int(message.user.name)
-
+    global ves
+    global product
     with sq.connect('bot_order.db') as con:
         cur = con.cursor()
-        cur.execute("""CREATE TABLE IF NOT EXISTS user_orders(data TEXT, id INTEGER)""")
-        cur.execute(f"INSERT INTO user_orders(data, id) VALUES('{user_data}', '{user_id}')")
+        cur.execute("""CREATE TABLE IF NOT EXISTS user_orders(data TEXT, id INTEGER, product TEXT, ves TEXT)""")
+        cur.execute(f"INSERT INTO user_orders(data, id, product, ves) VALUES('{user_data}', '{user_id}', '{product}', '{ves}')")
         con.commit()
 
 
