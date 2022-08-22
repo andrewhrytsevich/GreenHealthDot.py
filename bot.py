@@ -47,22 +47,16 @@ def vibor(call):
             photo1 = open('goroh.jpg', 'rb')
             bot.send_photo(call.message.chat.id, photo1)
             bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
-            # global product
-            # product = call.data
             bot.register_next_step_handler(call.message, reg_data)
         elif call.data == 'podsolhuh1':
             photo2 = open('podsolnuh.jpg', 'rb')
             bot.send_photo(call.message.chat.id, photo2)
             bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
-            # global product
-            # product = call.data
             bot.register_next_step_handler(call.message, reg_data)
         elif call.data == 'redis1':
             photo3 = open('redis.jpg', 'rb')
             bot.send_photo(call.message.chat.id, photo3)
             bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
-            # global product
-            # product = call.data
             bot.register_next_step_handler(call.message, reg_data)
     global product
     product = call.data
@@ -86,7 +80,7 @@ def vibor(call):
     ves = call.data
     print(ves)
 
-# @bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['text'])
 def last_answ(message):
     bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
 
