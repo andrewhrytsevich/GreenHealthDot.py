@@ -39,7 +39,6 @@ def vibor(message):
 @bot.callback_query_handler(func=lambda call: True)
 def vibor(call):
     # выбор продукта
-
     if call.message:
         # if call.data != 'goroh1' or 'podsolhuh1' or 'redis1' or 'gr_100' or 'gr_500' or 'gr_1000':
         #     bot.send_message(call.message.chat.id, 'Сделайте свой выбор')
@@ -61,6 +60,8 @@ def vibor(call):
     global product
     product = call.data
     print(product)
+
+
 @bot.callback_query_handler(func=lambda call: True)
 def vibor(call):
     if call.data == 'gr_100':
@@ -75,7 +76,6 @@ def vibor(call):
         bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
         bot.register_next_step_handler(call.message, last_answ)
         bot.register_next_step_handler(call.message, reg_data)
-
     global ves
     ves = call.data
     print(ves)
