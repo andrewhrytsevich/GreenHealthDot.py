@@ -63,7 +63,7 @@ def vibor(call):
 
 
 @bot.callback_query_handler(func=lambda call: True)
-def vibor(call):
+def vibor2(call):
     if call.data == 'gr_100':
         bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
         bot.register_next_step_handler(call.message, last_answ)
