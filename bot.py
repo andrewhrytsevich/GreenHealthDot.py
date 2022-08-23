@@ -28,7 +28,7 @@ def menu2():
     return markup2
 
 
-@bot.message_handler(commands=['start', 'help'])
+@bot.message_handler(commands=['start'])
 def vibor(message):
     photo = open('foto_zastavka.jpg', 'rb')
     bot.send_photo(message.chat.id, photo)
@@ -37,7 +37,8 @@ def vibor(message):
     bot.send_message(message.chat.id, 'Выбирете продукт:', reply_markup=menu1())
 
 
-@bot.callback_query_handler(func=lambda call: call.data == 'goroh1' or call.data == 'podsolhuh1' or call.data == 'redis1', )
+@bot.callback_query_handler(
+    func=lambda call: call.data == 'goroh1' or call.data == 'podsolhuh1' or call.data == 'redis1', )
 def menu_product(call):
     # выбор продукта
     if call.data == 'goroh1':
@@ -66,6 +67,7 @@ def menu_ves(call):
     global ves
     ves = call.data
 
+
 @bot.message_handler(content_types=['text'])
 def last_answ(message):
     if product and ves:
@@ -86,5 +88,6 @@ def reg_data(message):
         cur.execute(
             f"INSERT INTO user_orders(data, id, product, ves) VALUES('{user_data}', '{user_id}', '{product}', '{ves}')")
         con.commit()
+
 
 bot.polling(none_stop=True, interval=0)
