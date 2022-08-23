@@ -84,11 +84,11 @@ def last_answ(message):
     # if product and ves is True:
     bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
 
-
+print( ves, product)
 # ввод данных в БД
 def reg_data(message):
     user_data = message.text
-    user_id = int(message.user.name)
+    user_id = int(message.chat.id)
     global ves
     global product
     with sq.connect('bot_order.db') as con:
@@ -97,6 +97,5 @@ def reg_data(message):
         cur.execute(
             f"INSERT INTO user_orders(data, id, product, ves) VALUES('{user_data}', '{user_id}', '{product}', '{ves}')")
         con.commit()
-
 
 bot.polling(none_stop=True, interval=0)
