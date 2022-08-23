@@ -40,8 +40,6 @@ def vibor(message):
 @bot.callback_query_handler(func=lambda call: call.data == 'goroh1' or call.data == 'podsolhuh1' or call.data == 'redis1', )
 def menu_product(call):
     # выбор продукта
-    # if call.data != 'goroh1' or call.data != 'podsolhuh1' or call.data != 'redis1':
-    #     bot.send_message(call.message.chat.id, 'Вы не нажали на кнопку. Перезапутсите бота и сделайте свой выбор')
     if call.data == 'goroh1':
         photo1 = open('goroh.jpg', 'rb')
         bot.send_photo(call.message.chat.id, photo1)
@@ -61,20 +59,10 @@ def menu_product(call):
 @bot.callback_query_handler(func=lambda call: call.data == 'gr_100' or call.data == 'gr_500' or call.data == 'gr_1000')
 def menu_ves(call):
     # выбор веса
-    # if call.data != 'goroh1' or 'podsolhuh1' or 'redis1' or 'gr_100' or 'gr_500' or 'gr_1000':
-    #     bot.send_message(call.message.chat.id, 'Сделайте свой выбор', reply_markup=menu2())
     if call.data in ['gr_100', 'gr_500', 'gr_1000']:
         bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
         bot.register_next_step_handler(call.message, last_answ)
         bot.register_next_step_handler(call.message, reg_data)
-    # elif call.data == 'gr_500':
-    #     bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-    #     bot.register_next_step_handler(call.message, last_answ)
-    #     bot.register_next_step_handler(call.message, reg_data)
-    # elif call.data == 'gr_1000':
-    #     bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-    #     bot.register_next_step_handler(call.message, last_answ)
-    #     bot.register_next_step_handler(call.message, reg_data)
     global ves
     ves = call.data
 
