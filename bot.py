@@ -37,7 +37,7 @@ def vibor(message):
     bot.send_message(message.chat.id, 'Выбирете продукт:', reply_markup=menu1())
 
 
-@bot.callback_query_handler(func=lambda call: call.data == 'goroh1' or call.data == 'podsolhuh1' or call.data == 'redis1')
+@bot.callback_query_handler(func=lambda call: call.data == 'goroh1' or call.data == 'podsolhuh1' or call.data == 'redis1', )
 def menu_product(call):
     # выбор продукта
     # if call.data != 'goroh1' or call.data != 'podsolhuh1' or call.data != 'redis1':
@@ -81,8 +81,8 @@ def menu_ves(call):
 
 @bot.message_handler(content_types=['text'])
 def last_answ(message):
-    # if product and ves is True:
-    bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
+    if product and ves:
+        bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
 
 print( ves, product)
 # ввод данных в БД
