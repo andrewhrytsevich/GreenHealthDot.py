@@ -63,28 +63,29 @@ def menu_ves(call):
     # выбор веса
     # if call.data != 'goroh1' or 'podsolhuh1' or 'redis1' or 'gr_100' or 'gr_500' or 'gr_1000':
     #     bot.send_message(call.message.chat.id, 'Сделайте свой выбор', reply_markup=menu2())
-    if call.data == 'gr_100':
+    if call.data in ['gr_100', 'gr_500', 'gr_1000']:
         bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
         bot.register_next_step_handler(call.message, last_answ)
         bot.register_next_step_handler(call.message, reg_data)
-    elif call.data == 'gr_500':
-        bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-        bot.register_next_step_handler(call.message, last_answ)
-        bot.register_next_step_handler(call.message, reg_data)
-    elif call.data == 'gr_1000':
-        bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
-        bot.register_next_step_handler(call.message, last_answ)
-        bot.register_next_step_handler(call.message, reg_data)
+    # elif call.data == 'gr_500':
+    #     bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
+    #     bot.register_next_step_handler(call.message, last_answ)
+    #     bot.register_next_step_handler(call.message, reg_data)
+    # elif call.data == 'gr_1000':
+    #     bot.send_message(call.message.chat.id, 'Для заказа введите ваше Имя и номер телефона:')
+    #     bot.register_next_step_handler(call.message, last_answ)
+    #     bot.register_next_step_handler(call.message, reg_data)
     global ves
     ves = call.data
-
 
 @bot.message_handler(content_types=['text'])
 def last_answ(message):
     if product and ves:
         bot.send_message(message.chat.id, 'Спасибо. Ваш заказ принят. Менеджер перезвонит вам.')
+    else:
+        bot.send_message(message.chat.id, 'Вы не сделали свой выбор. Нажмите нужную кнопку.')
 
-print( ves, product)
+
 # ввод данных в БД
 def reg_data(message):
     user_data = message.text
