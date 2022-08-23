@@ -38,26 +38,27 @@ def vibor(message):
 
 
 @bot.callback_query_handler(
-    func=lambda call: call.data == 'goroh1' or call.data == 'podsolhuh1' or call.data == 'redis1', )
+    func=lambda call: call.data in ['goroh1', 'podsolhuh1','redis1'] )
 def menu_product(call):
     # выбор продукта
     if call.data == 'goroh1':
         photo1 = open('goroh.jpg', 'rb')
         bot.send_photo(call.message.chat.id, photo1)
-        bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
     elif call.data == 'podsolhuh1':
         photo2 = open('podsolnuh.jpg', 'rb')
         bot.send_photo(call.message.chat.id, photo2)
-        bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
     elif call.data == 'redis1':
         photo3 = open('redis.jpg', 'rb')
         bot.send_photo(call.message.chat.id, photo3)
-        bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
+    else:
+        bot.send_message(call.message.chat.id, 'Вы не сделали свой выбор. Нажмите нужную кнопку.')
+
+    bot.send_message(call.message.chat.id, 'Выберете вашу порцию:', reply_markup=menu2())
     global product
     product = call.data
 
 
-@bot.callback_query_handler(func=lambda call: call.data == 'gr_100' or call.data == 'gr_500' or call.data == 'gr_1000')
+@bot.callback_query_handler(func=lambda call: call.data in ['gr_100', 'gr_500', 'gr_1000'])
 def menu_ves(call):
     # выбор веса
     if call.data in ['gr_100', 'gr_500', 'gr_1000']:
